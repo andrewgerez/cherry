@@ -5,7 +5,32 @@ import postgres from 'postgres'
 
 const app = fastify()
 
-app.get('/links', async () => {
+app.get('/:code', async (req, reply) => {
+  const createLinkParamsSchema = z.object({
+    code: z.string().min(3),
+  })
+
+  const { code } = createLinkParamsSchema.parse(req.params)
+
+  const result = await sql/*sql */`
+    SELECT id, original_url
+    FROM cherry_links
+    WHERE cherry_links.code = ${code}
+  `
+
+  const link = result[0]
+
+  if (!result.length) {
+    return reply
+      .status(400)
+      .send({ message: 'Link not found.' })
+  }
+
+  return reply
+    .redirect(301, link.original_url)
+})
+
+app.get('/api/links', async () => {
   const result = await sql/*sql */`
     SELECT *
     FROM cherry_links
@@ -15,14 +40,14 @@ app.get('/links', async () => {
   return result
 })
 
-app.post('/links', async (req, reply) => {
-  const createLinkSchema = z.object({
+app.post('/api/links', async (req, reply) => {
+  const createLinkBodySchema = z.object({
     code: z.string().min(3),
     url: z.string().url(),
   })
 
   try {
-    const { code, url } = createLinkSchema.parse(req.body)
+    const { code, url } = createLinkBodySchema.parse(req.body)
 
     const result = await sql/*sql */`
       INSERT INTO cherry_links (code, original_url)
