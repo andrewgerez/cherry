@@ -1,4 +1,6 @@
-app.get('/api/analytics', async () => {
+import { redis } from "../../../lib/redis"
+
+export async function analytics() {
   const result = await redis.zRangeByScoreWithScores('analytics', 0, 50)
 
   const analytics = result
@@ -9,4 +11,4 @@ app.get('/api/analytics', async () => {
     }))
 
   return analytics
-})
+}
