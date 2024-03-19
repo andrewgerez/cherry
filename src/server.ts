@@ -2,6 +2,7 @@ import fastify from 'fastify'
 import { z } from 'zod'
 import { sql } from './lib/postgres'
 import postgres from 'postgres'
+import { redis } from './lib/redis'
 
 const app = fastify()
 
@@ -19,6 +20,8 @@ app.get('/:code', async (req, reply) => {
   `
 
   const link = result[0]
+
+  await redis.zIncrBy('analytics', 1, String(link.id))
 
   if (!result.length) {
     return reply
