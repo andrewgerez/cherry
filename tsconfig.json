@@ -8,6 +8,11 @@
     "module": "node16",
     "target": "es2022",
 
+    "baseUrl": "./",
+    "paths": {
+      "@/*": ["./src/*"]
+    },
+
     "strict": true,
     "esModuleInterop": true,
     "skipLibCheck": true,

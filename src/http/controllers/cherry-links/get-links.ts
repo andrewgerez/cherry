@@ -1,4 +1,4 @@
-import { sql } from "../../../lib/postgres"
+import { sql } from '@/lib/postgres'
 
 export async function getLinks() {
   const result = await sql/*sql */`

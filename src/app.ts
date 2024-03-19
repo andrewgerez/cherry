@@ -1,5 +1,5 @@
 import fastify from 'fastify'
-import { cherryLinksRoutes } from './http/controllers/cherry-links/routes'
+import { cherryLinksRoutes } from '@/http/controllers/cherry-links/routes'
 
 export const app = fastify()
 

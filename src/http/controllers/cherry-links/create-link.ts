@@ -1,7 +1,7 @@
 import { FastifyReply, FastifyRequest } from 'fastify'
 import postgres from 'postgres'
 import z from 'zod'
-import { sql } from '../../../lib/postgres'
+import { sql } from '@/lib/postgres'
 
 export async function create(req: FastifyRequest, reply: FastifyReply) {
   const createLinkBodySchema = z.object({
