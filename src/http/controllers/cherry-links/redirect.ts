@@ -1,4 +1,9 @@
-app.get('/:code', async (req, reply) => {
+import { FastifyReply, FastifyRequest } from 'fastify'
+import z from 'zod'
+import { sql } from '../../../lib/postgres'
+import { redis } from '../../../lib/redis'
+
+export async function redirect(req: FastifyRequest, reply: FastifyReply) {
   const createLinkParamsSchema = z.object({
     code: z.string().min(3),
   })
@@ -23,4 +28,4 @@ app.get('/:code', async (req, reply) => {
 
   return reply
     .redirect(301, link.original_url)
-})
+}
