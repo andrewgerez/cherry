@@ -7,5 +7,5 @@ export async function getLinks() {
   ORDER BY created_at DESC
 `
 
-return result
+  return result
 }
